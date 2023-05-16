@@ -25,21 +25,23 @@ If using Debian we suggest following the official Docker installation guide: htt
 5. Run the script with the desired command:
 
     ```shell
-    ./script.sh [command] [arguments]
+    ./robocorp-docker.sh [command] [arguments]
     ```
 
-   Replace `[command]` with one of the following commands:
-   - `start`: Start the application. Optionally, you can specify the number of replicas as an argument (defaults to 1 if not provided).
-   - `stop`: Stop the application.
-   - `status`: Show the status of the application.
-   - `build`: Build the Docker container first, so the start command will be executed faster.
-   - `logs`: Get the logs from inside the Docker container
+    Be careful that your user has access to run Docker commands, otherwhise you will need to run the commands with `sudo` before them.
 
-   If using the `start` command, you can specify the number of replicas as an argument:
+    Replace `[command]` with one of the following commands:
+    - `start`: Start the application. Optionally, you can specify the number of replicas as an argument (defaults to 1 if not provided).
+    - `stop`: Stop the application.
+    - `status`: Show the status of the application.
+    - `build`: Build the Docker container first, so the start command will be executed faster.
+    - `logs`: Get the logs from inside the Docker container
 
-   ```shell
-   ./script.sh start 3
-   ```
+    If using the `start` command, you can specify the number of replicas as an argument:
 
-   This will start three replicas of the Docker container.
+    ```shell
+    ./robocorp-docker.sh start 3
+    ```
+
+    This will start three replicas of the Docker container.
 
