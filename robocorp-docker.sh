@@ -6,25 +6,26 @@ TOKEN_VAR=$(<"$TOKEN_FILE")
 
 start() {
     replicas=$1
-    echo "Executing command: docker compose -f \"$DOCKER_COMPOSE_FILE\" up -d --scale worker=\"$replicas\" -e RC_WORKER_LINK_TOKEN=$TOKEN_VAR"
-    docker-compose -f "$DOCKER_COMPOSE_FILE" up -d --scale worker="$replicas -e LINK_TOKEN=$TOKEN_VAR"
+    echo "Executing command: RC_WORKER_LINK_TOKEN=$TOKEN_VAR docker compose -f \"$DOCKER_COMPOSE_FILE\" up -d --scale worker=\"$replicas\""
+    RC_WORKER_LINK_TOKEN=$TOKEN_VAR docker compose -f "$DOCKER_COMPOSE_FILE" up -d --scale worker="$replicas"
     echo "Start command done."
 }
 
 stop() {
     echo "Executing command: docker compose -f \"$DOCKER_COMPOSE_FILE\" down"
-    docker-compose -f "$DOCKER_COMPOSE_FILE" down
+    docker compose -f "$DOCKER_COMPOSE_FILE" down
+    echo "Stop command done."
 }
 
 status() {
     echo "Executing command: docker compose -f \"$DOCKER_COMPOSE_FILE\" ps"
-    docker-compose -f "$DOCKER_COMPOSE_FILE" ps
+    docker compose -f "$DOCKER_COMPOSE_FILE" ps
 }
 
 build() {
     echo "Executing command: docker compose -f \"$DOCKER_COMPOSE_FILE\" build --no-cache"
     docker compose -f "$DOCKER_COMPOSE_FILE" build --no-cache
-    echo "Stop command done."
+    echo "Build command done."
 }
 
 logs() {
@@ -33,7 +34,7 @@ logs() {
 }
 
 if [ $# -lt 1 ]; then
-    echo "Please specify a command: start, stop, or status"
+    echo "Please specify a command: start, stop, status, build or logs."
     exit 1
 fi
 

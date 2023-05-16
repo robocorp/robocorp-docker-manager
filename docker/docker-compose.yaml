@@ -3,3 +3,5 @@ services:
   worker:
     build:
       context: ./
+    environment:
+      - RC_WORKER_LINK_TOKEN=$RC_WORKER_LINK_TOKEN
