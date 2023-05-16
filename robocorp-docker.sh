@@ -23,8 +23,8 @@ status() {
 }
 
 build() {
-    echo "Executing command: docker compose -f \"$DOCKER_COMPOSE_FILE\" build --no-cache"
-    docker compose -f "$DOCKER_COMPOSE_FILE" build --no-cache
+    echo "Executing command: RC_WORKER_LINK_TOKEN=$TOKEN_VAR docker compose -f \"$DOCKER_COMPOSE_FILE\" build --no-cache"
+    RC_WORKER_LINK_TOKEN=$TOKEN_VAR  docker compose -f "$DOCKER_COMPOSE_FILE" build --no-cache
     echo "Build command done."
 }
 
