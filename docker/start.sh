@@ -9,4 +9,4 @@ echo "Linking the Agent with name $name and token $token"
 echo "Linking succeeded"
 
 echo "Starting the Agent..."
-exec ./bin/robocorp-workforce-agent-core start --instance-path ./instance --envEndpoint $endpoint --log-level TRACE --run-once
+exec ./bin/robocorp-workforce-agent-core start --instance-path ./instance --envEndpoint $endpoint --log-level TRACE
