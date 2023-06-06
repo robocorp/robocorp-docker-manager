@@ -45,6 +45,8 @@ RUN mkdir -p /home/worker/bin && \
     mkdir -p /home/worker/bin/conda && \
     mkdir -p /home/worker/instance
 
+COPY ./rtconfig.yml instance/rtconfig.yml
+
 RUN curl --silent --show-error --fail -o \
     /home/worker/bin/robocorp-workforce-agent-core \
     https://downloads.robocorp.com/workforce-agent-core/releases/latest/linux64/robocorp-workforce-agent-core

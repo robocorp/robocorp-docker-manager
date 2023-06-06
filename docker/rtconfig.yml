@@ -1,0 +1,18 @@
+# Agent Core Environment configuration for Robocorp Agent Core
+
+run:
+  # Specify commands allowed to be executed.
+  #  - See https://www.npmjs.com/package/micromatch#ismatch for reference
+  # Containers should be protected by other levels and not need to rely on this.
+  allowedCommands:
+    # ALLOWS ANYTHING TO BE RUN
+    - '**/*'
+
+dataTransfer:
+  # Specify what data is allowed to be sent to the cloud from the executed process.
+  # When data transfer is enabled, the data including build artifacts, app console log and console output
+  # are sent to the cloud.
+  # If disabled, only the operationally mandatory control messages between Control Room and Agent are sent.
+  #
+  # To disable data transfer, set option 'disable: true'.
+  disable: false
