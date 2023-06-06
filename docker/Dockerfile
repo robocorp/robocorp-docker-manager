@@ -4,24 +4,35 @@ FROM debian:bookworm
 # Set all variables that affect programs to follow same encoding
 ENV LANG=C.UTF-8 LANGUAGE=C.UTF-8 LC_ALL=C.UTF-8
 
-ARG RCC_IDENTITY=107ca2dd-143d-bd6d-98b7-36a7facf7596
+# libgtk-3-0 dependency added because Firefox installation from conda-forge 
+# depends on this library and it wasn't available in the base container
 
-# libgtk-3-0 dependency was added with agent core v4.5.0 (hololib support)
-# Firefox installation from conda-forge depends on this library and it wasn't available anymore from
-# the base ubuntu:18.04 image
-
-RUN apt-get update --fix-missing && \
-    apt-get install -y wget bzip2 ca-certificates curl bash chromium chromium-driver build-essential libgtk-3-0 && \
-    apt-get install -y fonts-indic fonts-noto fonts-noto-cjk && \
-    apt-get install -y zip libdbus-glib-1-2 && \
-    apt-get install -y git && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y wkhtmltopdf xvfb && \
-    apt-get install -y libreoffice unoconv && \
-    export PATH=$PATH:/usr/lib/chromium-browser/ && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    echo "Chromium Version: " && chromium --product-version && chromedriver --version \
-    dpkg -l
+RUN apt-get update --fix-missing \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        wget \
+        bzip2 \
+        ca-certificates \
+        curl \
+        bash \
+        chromium \
+        chromium-driver \
+        build-essential \
+        libgtk-3-0 \
+        git \
+        fonts-indic \
+        fonts-noto \
+        fonts-noto-cjk \
+        zip \
+        libdbus-glib-1-2 \
+        wkhtmltopdf \
+        xvfb \
+        libreoffice \
+        unoconv \
+    && export PATH=$PATH:/usr/lib/chromium-browser/ \
+    && echo "Chromium Version: " && chromium --product-version && chromedriver --version \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && echo "Installed Packages: " && dpkg -l
 
 RUN useradd --no-log-init --system --create-home --shell /bin/bash worker
 
