@@ -52,18 +52,16 @@ RUN curl --silent --show-error --fail -o \
     https://downloads.robocorp.com/workforce-agent-core/releases/latest/linux64/robocorp-workforce-agent-core
 RUN chmod +x /home/worker/bin/robocorp-workforce-agent-core
 
-# Initialize the Agent Core and build default environment
-RUN /home/worker/bin/robocorp-workforce-agent-core init --log-level TRACE --rcc-exec-path /home/worker/bin/rcc \
-    && rm -rf /home/worker/.robocorp/base
+# Initialize the Agent Core
+RUN /home/worker/bin/robocorp-workforce-agent-core init --log-level TRACE --rcc-exec-path /home/worker/bin/rcc 
 
-RUN /home/worker/bin/rcc robot initialize --directory /home/worker/default_env --template standard \
-    && /home/worker/bin/rcc holotree variables --space workforce --controller agent.core.container --liveonly --timeline /home/worker/default_env/conda.yaml \
-    && rm -rf /home/worker/.robocorp/holotree/v*h \
-    && rm -rf /home/worker/.robocorp/hololib \
-    && rm -rf /home/worker/.robocorp/pipcache \
-    && rm -rf /home/worker/.robocorp/pkgs \
-    && rm -rf /home/worker/default_env \
-    && rm -f .robocorp/templates/*
+# OPTIONAL: Prebuild common environment(s) into the container image
+# This will increase the image size, but the environments prebuilt will be ready-to-go for robot executions.
+#COPY ./prebuilt-env-2023-06-07.yaml prebuilt-envs/prebuilt-env-2023-06-07.yaml
+#RUN /home/worker/bin/rcc ht vars prebuilt-envs/prebuilt-env-2023-06-07.yaml --space workforce --controller agent.core.container --timeline \
+#    && rm -rf /home/worker/.robocorp/pipcache \
+#    && rm -rf /home/worker/.robocorp/pkgs \
+#    && rm -rf /home/worker/.robocorp/holotree/v*h
 
 # Set the local scripts in place
 COPY ./start.sh start.sh
