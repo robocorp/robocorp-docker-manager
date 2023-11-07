@@ -7,6 +7,9 @@ ENV LANG=C.UTF-8 LANGUAGE=C.UTF-8 LC_ALL=C.UTF-8
 # depends on this library and it wasn't available in the base container
 
 RUN apt-get update --fix-missing \
+    && apt-get upgrade -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        ca-certificates-java \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
         wget \
         bzip2 \
@@ -17,12 +20,14 @@ RUN apt-get update --fix-missing \
         chromium-driver \
         build-essential \
         libgtk-3-0 \
+	libdbus-glib-1-2 \
+        libasound2 \
+        libx11-xcb1 \
         git \
         fonts-indic \
         fonts-noto \
         fonts-noto-cjk \
         zip \
-        libdbus-glib-1-2 \
         wkhtmltopdf \
         xvfb \
         libreoffice \
